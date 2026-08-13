@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "صناع الطعم | Taste Makers — مطبخ فاخر",
-  description: "صناع الطعم — أطباق سعودية ويمنية فاخرة بلمسة عصرية. اطلب الآن وتمتع بأشهى المأكولات.",
+  description: "صناع الطعم — أطباق شعبية فاخرة بلمسة عصرية. اطلب الآن وتمتع بأشهى المأكولات.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
