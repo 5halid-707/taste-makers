@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Menu, X, Phone, MapPin, Clock, Star, ShoppingBag, Plus, Minus,
-  ChevronLeft, ChevronRight, Flame, Sparkles, Heart, Send,
-  Instagram, Twitter, Ghost, MessageCircle,
+  Flame, Sparkles, Heart, Send, Instagram, Twitter, Ghost, MessageCircle,
 } from "lucide-react";
 import { CATEGORIES, DISHES, formatPrice, type Dish } from "@/lib/data";
 
@@ -34,18 +33,14 @@ export default function Home() {
   const addToCart = (dish: Dish) => {
     setCart((prev) => {
       const existing = prev.find((c) => c.dish.id === dish.id);
-      if (existing) {
-        return prev.map((c) => c.dish.id === dish.id ? { ...c, qty: c.qty + 1 } : c);
-      }
+      if (existing) return prev.map((c) => c.dish.id === dish.id ? { ...c, qty: c.qty + 1 } : c);
       return [...prev, { dish, qty: 1 }];
     });
     setCartOpen(true);
   };
 
   const updateQty = (id: string, delta: number) => {
-    setCart((prev) =>
-      prev.map((c) => c.dish.id === id ? { ...c, qty: Math.max(0, c.qty + delta) } : c).filter((c) => c.qty > 0)
-    );
+    setCart((prev) => prev.map((c) => c.dish.id === id ? { ...c, qty: Math.max(0, c.qty + delta) } : c).filter((c) => c.qty > 0));
   };
 
   const cartTotal = cart.reduce((sum, c) => sum + c.dish.price * c.qty, 0);
@@ -56,13 +51,10 @@ export default function Home() {
       {/* Navbar */}
       <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled ? "bg-[#1a1208]/95 backdrop-blur-md shadow-lg shadow-black/50" : "bg-transparent"}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-4">
-          {/* Logo */}
-          <a href="#home" className="flex items-center gap-2 sm:gap-3 group">
-            <div className="relative">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden ring-2 ring-[#d4a017]/40 group-hover:ring-[#d4a017] transition-all animate-glow">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.jpg" alt="صناع الطعم" className="w-full h-full object-cover" />
-              </div>
+          <a href="#home" className="flex items-center gap-2 sm:gap-3 group shrink-0">
+            <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden ring-2 ring-[#d4a017]/40 group-hover:ring-[#d4a017] transition-all shadow-lg" style={{ boxShadow: "0 4px 20px rgba(212,160,23,0.3)" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.jpg" alt="صناع الطعم" className="w-full h-full object-cover" />
             </div>
             <div className="flex flex-col leading-tight">
               <span className="text-base sm:text-xl font-extrabold text-gold-gradient">صناع الطعم</span>
@@ -70,7 +62,6 @@ export default function Home() {
             </div>
           </a>
 
-          {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-6">
             <a href="#home" className="text-sm font-semibold text-[#fff8ee]/80 hover:text-[#d4a017] transition-colors">الرئيسية</a>
             <a href="#menu" className="text-sm font-semibold text-[#fff8ee]/80 hover:text-[#d4a017] transition-colors">القائمة</a>
@@ -79,17 +70,13 @@ export default function Home() {
             <a href="#contact" className="text-sm font-semibold text-[#fff8ee]/80 hover:text-[#d4a017] transition-colors">تواصل</a>
           </nav>
 
-          {/* Actions */}
           <div className="flex items-center gap-2 sm:gap-3">
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hidden sm:flex items-center gap-1.5 bg-[#25D366]/20 border border-[#25D366]/40 text-[#25D366] px-3 py-2 rounded-full text-xs font-bold hover:bg-[#25D366]/30 transition-colors">
-              <Phone size={14} />
-              اطلب
+              <Phone size={14} /> اطلب
             </a>
             <button onClick={() => setCartOpen(true)} className="relative p-2 sm:p-3 rounded-full bg-[#d4a017]/10 border border-[#d4a017]/30 text-[#d4a017] hover:bg-[#d4a017]/20 transition-colors">
               <ShoppingBag size={20} />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#c0392b] text-white text-[10px] font-bold rounded-full flex items-center justify-center">{cartCount}</span>
-              )}
+              {cartCount > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#c0392b] text-white text-[10px] font-bold rounded-full flex items-center justify-center">{cartCount}</span>}
             </button>
             <button onClick={() => setMenuOpen(!menuOpen)} className="lg:hidden p-2 text-[#fff8ee]">
               {menuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -97,99 +84,79 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Mobile menu */}
         {menuOpen && (
           <div className="lg:hidden bg-[#1a1208] border-t border-[#d4a017]/20 py-4">
             <nav className="flex flex-col px-4 gap-1">
-              {["الرئيسية", "القائمة", "من نحن", "احجز طاولة", "تواصل"].map((link) => (
-                <a key={link} href={`#${link === "الرئيسية" ? "home" : link === "القائمة" ? "menu" : link === "تواصل" ? "contact" : link === "احجز طاولة" ? "reservation" : "about"}`} onClick={() => setMenuOpen(false)} className="py-3 text-sm font-semibold text-[#fff8ee]/80 hover:text-[#d4a017] border-b border-[#d4a017]/10">{link}</a>
+              {[["الرئيسية","home"],["القائمة","menu"],["من نحن","about"],["احجز طاولة","reservation"],["تواصل","contact"]].map(([label,href]) => (
+                <a key={href} href={`#${href}`} onClick={() => setMenuOpen(false)} className="py-3 text-sm font-semibold text-[#fff8ee]/80 hover:text-[#d4a017] border-b border-[#d4a017]/10">{label}</a>
               ))}
             </nav>
           </div>
         )}
       </header>
 
-      {/* Hero Section */}
+      {/* Hero */}
       <section id="home" className="relative min-h-screen flex items-center overflow-hidden pt-20">
-        {/* Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a1208] via-[#2a1f10] to-[#1a1208]" />
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle at 30% 50%, #d4a017 0%, transparent 50%), radial-gradient(circle at 70% 30%, #c0392b 0%, transparent 40%)" }} />
-
-        {/* Floating decorative elements */}
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle at 30% 50%, #d4a017 0%, transparent 50%)" }} />
         <div className="absolute top-1/4 right-10 w-40 h-40 rounded-full bg-[#d4a017]/10 blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 left-10 w-60 h-60 rounded-full bg-[#c0392b]/10 blur-3xl animate-float" style={{ animationDelay: "1.5s" }} />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 w-full grid lg:grid-cols-2 gap-8 items-center">
-          {/* Left content */}
           <div className="text-center lg:text-right">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
               <span className="inline-flex items-center gap-2 bg-[#d4a017]/10 border border-[#d4a017]/30 text-[#d4a017] px-4 py-2 rounded-full text-xs sm:text-sm font-medium mb-6">
-                <Sparkles size={14} />
-                مطبخ سعودي ويمني فاخر
+                <Sparkles size={14} /> مطبخ شعبي فاخر
               </span>
             </motion.div>
-
             <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="text-4xl sm:text-6xl lg:text-7xl font-extrabold leading-tight mb-6">
-              نُبدع <span className="text-gold-gradient">الطعم</span><br />
-              بأيدي صنّاع مهرة
+              نُبدع <span className="text-gold-gradient">الطعم</span><br />بأيدي صنّاع مهرة
             </motion.h1>
-
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-base sm:text-lg text-[#fff8ee]/70 mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed">
-              اكتشف أشهى الأطباق السعودية واليمنية الأصيلة، محضّرة بأجود المكونات وبلمسة عصرية تجمع بين الأصالة والإبداع.
+              اكتشف أشهى الأطباق الشعبية الأصيلة، محضّرة بأجود المكونات وبلمسة عصرية تجمع بين الأصالة والإبداع.
             </motion.p>
-
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="flex flex-wrap gap-3 justify-center lg:justify-start">
               <a href="#menu" className="inline-flex items-center gap-2 bg-gradient-to-r from-[#d4a017] to-[#f0c040] text-[#1a1208] font-bold px-7 py-3.5 rounded-full shadow-3d hover:scale-105 transition-transform">
-                <ShoppingBag size={18} />
-                تصفّح القائمة
+                <ShoppingBag size={18} /> تصفّح القائمة
               </a>
               <a href="#reservation" className="inline-flex items-center gap-2 bg-[#fff8ee]/5 border-2 border-[#d4a017]/40 text-[#fff8ee] font-bold px-7 py-3.5 rounded-full hover:bg-[#d4a017]/10 transition-colors">
                 احجز طاولة
               </a>
             </motion.div>
-
-            {/* Stats */}
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="flex gap-6 sm:gap-10 mt-12 justify-center lg:justify-start">
-              {[
-                { num: "20+", label: "طبق فاخر" },
-                { num: "5K+", label: "عميل سعيد" },
-                { num: "4.9", label: "تقييم", icon: Star },
-              ].map((s, i) => (
+              {[{n:"55+",l:"طبق فاخر"},{n:"5K+",l:"عميل سعيد"},{n:"4.9",l:"تقييم",i:Star}].map((s,i) => (
                 <div key={i} className="text-center">
                   <div className="flex items-center justify-center gap-1">
-                    <span className="text-2xl sm:text-3xl font-extrabold text-gold-gradient">{s.num}</span>
-                    {s.icon && <s.icon size={16} className="text-[#d4a017] fill-current" />}
+                    <span className="text-2xl sm:text-3xl font-extrabold text-gold-gradient">{s.n}</span>
+                    {s.i && <s.i size={16} className="text-[#d4a017] fill-current" />}
                   </div>
-                  <span className="text-xs text-[#fff8ee]/50">{s.label}</span>
+                  <span className="text-xs text-[#fff8ee]/50">{s.l}</span>
                 </div>
               ))}
             </motion.div>
           </div>
 
-          {/* Right — 3D image showcase */}
+          {/* Hero images */}
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5, duration: 0.8 }} className="relative hidden lg:block perspective-1500">
             <div className="relative w-full h-[500px] preserve-3d">
-              {/* Main dish — center */}
+              {/* Main dish */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full overflow-hidden shadow-3d animate-float z-20 ring-4 ring-[#d4a017]/30">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/dishes/mandi.png" alt="مندي اللحم" className="w-full h-full object-cover" />
+                <img src="/dishes/mandi.jpg" alt="مندي لحم" className="w-full h-full object-cover" />
               </div>
-              {/* Floating dish 1 — top right */}
-              <div className="absolute top-4 right-4 w-40 h-40 rounded-2xl overflow-hidden shadow-3d animate-float card-3d z-10" style={{ animationDelay: "0.5s" }}>
+              {/* Floating dishes */}
+              <div className="absolute top-4 right-4 w-40 h-40 rounded-2xl overflow-hidden shadow-3d animate-float z-10" style={{ animationDelay: "0.5s" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/dishes/kibbeh-fried.png" alt="كبة" className="w-full h-full object-cover" />
+                <img src="/dishes/kibbeh-fried.jpg" alt="كبة" className="w-full h-full object-cover" />
               </div>
-              {/* Floating dish 2 — bottom left */}
-              <div className="absolute bottom-4 left-4 w-44 h-44 rounded-2xl overflow-hidden shadow-3d animate-float card-3d z-10" style={{ animationDelay: "1s" }}>
+              <div className="absolute bottom-4 left-4 w-44 h-44 rounded-2xl overflow-hidden shadow-3d animate-float z-10" style={{ animationDelay: "1s" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/dishes/cheesecake.png" alt="تشيز كيك" className="w-full h-full object-cover" />
+                <img src="/dishes/cheesecake.jpg" alt="تشيز كيك" className="w-full h-full object-cover" />
               </div>
-              {/* Floating dish 3 — top left */}
-              <div className="absolute top-12 left-12 w-32 h-32 rounded-2xl overflow-hidden shadow-3d animate-float card-3d z-10" style={{ animationDelay: "1.5s" }}>
+              <div className="absolute top-12 left-12 w-32 h-32 rounded-2xl overflow-hidden shadow-3d animate-float z-10" style={{ animationDelay: "1.5s" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/dishes/samosa.png" alt="سمبوسة" className="w-full h-full object-cover" />
+                <img src="/dishes/samosa.jpg" alt="سمبوسة" className="w-full h-full object-cover" />
               </div>
-              {/* Decorative ring */}
+              {/* Ring */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-96 h-96 rounded-full border-2 border-dashed border-[#d4a017]/20 animate-spin-slow" />
               </div>
@@ -201,26 +168,16 @@ export default function Home() {
       {/* Features bar */}
       <section className="py-8 bg-[#2a1f10] border-y border-[#d4a017]/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            { icon: Flame, title: "طازج يومياً", desc: "نطبخ كل يوم" },
-            { icon: Clock, title: "توصيل سريع", desc: "خلال 30 دقيقة" },
-            { icon: Star, title: "جودة عالية", desc: "أجود المكونات" },
-            { icon: Heart, title: "طعم أصيل", desc: "وصفات تقليدية" },
-          ].map((f, i) => (
+          {[{i:Flame,t:"طازج يومياً",d:"نطبخ كل يوم"},{i:Clock,t:"توصيل سريع",d:"خلال 30 دقيقة"},{i:Star,t:"جودة عالية",d:"أجود المكونات"},{i:Heart,t:"طعم أصيل",d:"وصفات شعبية"}].map((f,i) => (
             <div key={i} className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-[#d4a017]/10 flex items-center justify-center text-[#d4a017] shrink-0">
-                <f.icon size={22} />
-              </div>
-              <div>
-                <p className="font-bold text-sm text-[#fff8ee]">{f.title}</p>
-                <p className="text-xs text-[#fff8ee]/50">{f.desc}</p>
-              </div>
+              <div className="w-12 h-12 rounded-full bg-[#d4a017]/10 flex items-center justify-center text-[#d4a017] shrink-0"><f.i size={22} /></div>
+              <div><p className="font-bold text-sm text-[#fff8ee]">{f.t}</p><p className="text-xs text-[#fff8ee]/50">{f.d}</p></div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Menu Section */}
+      {/* Menu */}
       <section id="menu" className="py-20 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
@@ -229,12 +186,11 @@ export default function Home() {
             <div className="w-20 h-1 bg-[#d4a017] mx-auto mt-4 rounded-full" />
           </div>
 
-          {/* Category filters */}
-          <div className="flex gap-2 overflow-x-auto no-scrollbar pb-4 mb-8 justify-start sm:justify-center">
+          {/* Category filters — FIXED: flex-wrap instead of overflow */}
+          <div className="flex flex-wrap gap-2 justify-center mb-8 max-w-4xl mx-auto">
             {CATEGORIES.map((cat) => (
-              <button key={cat.id} onClick={() => setActiveCategory(cat.id)} className={`px-4 py-2.5 rounded-full text-sm font-bold transition-all whitespace-nowrap flex items-center gap-1.5 ${activeCategory === cat.id ? "bg-gradient-to-r from-[#d4a017] to-[#f0c040] text-[#1a1208] shadow-3d" : "bg-[#2a1f10] border border-[#d4a017]/20 text-[#fff8ee]/70 hover:border-[#d4a017]/50"}`}>
-                <span>{cat.icon}</span>
-                {cat.name}
+              <button key={cat.id} onClick={() => setActiveCategory(cat.id)} className={`px-3 py-2 rounded-full text-xs sm:text-sm font-bold transition-all flex items-center gap-1 ${activeCategory === cat.id ? "bg-gradient-to-r from-[#d4a017] to-[#f0c040] text-[#1a1208] shadow-3d" : "bg-[#2a1f10] border border-[#d4a017]/20 text-[#fff8ee]/70 hover:border-[#d4a017]/50"}`}>
+                <span>{cat.icon}</span>{cat.name}
               </button>
             ))}
           </div>
@@ -252,27 +208,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Section */}
+      {/* About */}
       <section id="about" className="py-20 sm:py-24 bg-[#2a1f10]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <span className="text-sm font-semibold text-[#d4a017] uppercase tracking-widest">من نحن</span>
             <h2 className="text-3xl sm:text-5xl font-extrabold text-[#fff8ee] mt-2 mb-6">قصتنا</h2>
             <p className="text-[#fff8ee]/70 text-lg leading-relaxed mb-4">
-              في "صناع الطعم"، نؤمن بأن الطعام ليس مجرد وجبة، بل تجربة ثقافية كاملة. نحرص على تقديم أطباق سعودية ويمنية أصيلة محضّرة بأجود المكونات الطبيعية وبطرق تقليدية متوارثة عبر الأجيال.
+              في "صناع الطعم"، نؤمن بأن الطعام ليس مجرد وجبة، بل تجربة ثقافية كاملة. نحرص على تقديم أطباق شعبية أصيلة محضّرة بأجود المكونات الطبيعية وبطرق تقليدية متوارثة عبر الأجيال.
             </p>
             <p className="text-[#fff8ee]/70 text-lg leading-relaxed mb-6">
               فريقنا من الطهاة المهرة يجمع بين الخبرة التقليدية واللمسة العصرية، لنقدّم لك أطباقاً لا تُنسى تليق بذوقك الرفيع.
             </p>
             <div className="grid grid-cols-3 gap-4">
-              {[
-                { num: "20+", label: "طبق متنوع" },
-                { num: "5K+", label: "عميل سعيد" },
-                { num: "4.9★", label: "تقييم العملاء" },
-              ].map((s, i) => (
+              {[{n:"55+",l:"طبق متنوع"},{n:"5K+",l:"عميل سعيد"},{n:"4.9★",l:"تقييم العملاء"}].map((s,i) => (
                 <div key={i} className="text-center bg-[#1a1208] rounded-2xl p-4 border border-[#d4a017]/10">
-                  <div className="text-2xl font-extrabold text-gold-gradient">{s.num}</div>
-                  <div className="text-xs text-[#fff8ee]/50 mt-1">{s.label}</div>
+                  <div className="text-2xl font-extrabold text-gold-gradient">{s.n}</div>
+                  <div className="text-xs text-[#fff8ee]/50 mt-1">{s.l}</div>
                 </div>
               ))}
             </div>
@@ -282,18 +234,18 @@ export default function Home() {
             <div className="relative grid grid-cols-2 gap-4">
               <div className="rounded-3xl overflow-hidden shadow-3d aspect-[3/4] card-lift">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/dishes/jareesh.png" alt="جريش" className="w-full h-full object-cover" />
+                <img src="/dishes/jareesh.jpg" alt="جريش" className="w-full h-full object-cover" />
               </div>
               <div className="rounded-3xl overflow-hidden shadow-3d aspect-[3/4] mt-8 card-lift">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/dishes/thareed.png" alt="ثريد" className="w-full h-full object-cover" />
+                <img src="/dishes/thareed.jpg" alt="ثريد" className="w-full h-full object-cover" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Reservation Section */}
+      {/* Reservation */}
       <section id="reservation" className="py-20 sm:py-24">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
@@ -305,41 +257,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Contact / Footer */}
+      {/* Footer */}
       <footer id="contact" className="bg-[#2a1f10] pt-16 pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-            {/* Brand */}
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-2xl overflow-hidden ring-2 ring-[#d4a017]/40">
+                <div className="w-12 h-12 rounded-2xl overflow-hidden ring-2 ring-[#d4a017]/40 shadow-lg" style={{ boxShadow: "0 4px 20px rgba(212,160,23,0.3)" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/logo.jpg" alt="صناع الطعم" className="w-full h-full object-cover" />
                 </div>
-                <div>
-                  <p className="text-lg font-extrabold text-gold-gradient">صناع الطعم</p>
-                  <p className="text-[10px] text-[#d4a017]/60 tracking-widest">TASTE MAKERS</p>
-                </div>
+                <div><p className="text-lg font-extrabold text-gold-gradient">صناع الطعم</p><p className="text-[10px] text-[#d4a017]/60 tracking-widest">TASTE MAKERS</p></div>
               </div>
-              <p className="text-sm text-[#fff8ee]/60 mb-4 leading-relaxed">مطبخ سعودي ويمني فاخر يقدّم أشهى الأطباق الأصيلة بلمسة عصرية.</p>
-              {/* Social */}
+              <p className="text-sm text-[#fff8ee]/60 mb-4 leading-relaxed">مطبخ شعبي فاخر يقدّم أشهى الأطباق الأصيلة بلمسة عصرية.</p>
               <div className="flex gap-2">
-                <a href={SNAPCHAT_URL} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#fff8ee]/10 hover:bg-[#fffc00]/20 flex items-center justify-center text-[#fffc00] transition-colors" aria-label="Snapchat">
-                  <Ghost size={18} />
-                </a>
-                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#fff8ee]/10 hover:bg-[#25D366]/20 flex items-center justify-center text-[#25D366] transition-colors" aria-label="WhatsApp">
-                  <MessageCircle size={18} />
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-[#fff8ee]/10 hover:bg-[#d4a017]/20 flex items-center justify-center text-[#d4a017] transition-colors" aria-label="Instagram">
-                  <Instagram size={18} />
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-[#fff8ee]/10 hover:bg-[#d4a017]/20 flex items-center justify-center text-[#d4a017] transition-colors" aria-label="Twitter">
-                  <Twitter size={18} />
-                </a>
+                <a href={SNAPCHAT_URL} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#fff8ee]/10 hover:bg-[#fffc00]/20 flex items-center justify-center text-[#fffc00] transition-colors" aria-label="Snapchat"><Ghost size={18} /></a>
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#fff8ee]/10 hover:bg-[#25D366]/20 flex items-center justify-center text-[#25D366] transition-colors" aria-label="WhatsApp"><MessageCircle size={18} /></a>
+                <a href="#" className="w-10 h-10 rounded-full bg-[#fff8ee]/10 hover:bg-[#d4a017]/20 flex items-center justify-center text-[#d4a017] transition-colors" aria-label="Instagram"><Instagram size={18} /></a>
+                <a href="#" className="w-10 h-10 rounded-full bg-[#fff8ee]/10 hover:bg-[#d4a017]/20 flex items-center justify-center text-[#d4a017] transition-colors" aria-label="Twitter"><Twitter size={18} /></a>
               </div>
             </div>
-
-            {/* Links */}
             <div>
               <h4 className="font-bold text-[#d4a017] mb-4">روابط سريعة</h4>
               <ul className="space-y-2 text-sm text-[#fff8ee]/60">
@@ -349,8 +286,6 @@ export default function Home() {
                 <li><a href="#reservation" className="hover:text-[#d4a017]">احجز طاولة</a></li>
               </ul>
             </div>
-
-            {/* Categories */}
             <div>
               <h4 className="font-bold text-[#d4a017] mb-4">الفئات</h4>
               <ul className="space-y-2 text-sm text-[#fff8ee]/60">
@@ -359,8 +294,6 @@ export default function Home() {
                 ))}
               </ul>
             </div>
-
-            {/* Contact */}
             <div>
               <h4 className="font-bold text-[#d4a017] mb-4">تواصل معنا</h4>
               <ul className="space-y-3 text-sm text-[#fff8ee]/60">
@@ -370,7 +303,6 @@ export default function Home() {
               </ul>
             </div>
           </div>
-
           <div className="pt-6 border-t border-[#d4a017]/10 text-center text-xs text-[#fff8ee]/40">
             <p>© 2026 صناع الطعم. جميع الحقوق محفوظة.</p>
             <p className="mt-2 text-[#d4a017]">صُمّم بكل ❤ حب بواسطة <a href="https://khalid-cyber-security.vercel.app/" target="_blank" rel="noopener noreferrer" className="font-bold underline hover:text-[#fff8ee]">خالد محمد</a></p>
@@ -428,24 +360,47 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* Dish detail modal */}
+      {/* Dish detail modal — FIXED: smaller image, qty selector, price visible */}
       <AnimatePresence>
         {selectedDish && (
           <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedDish(null)} className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[80] flex items-center justify-center p-4" >
-              <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} onClick={(e) => e.stopPropagation()} className="bg-[#1a1208] border-2 border-[#d4a017]/20 rounded-3xl max-w-md w-full overflow-hidden shadow-3d" >
-                <div className="relative aspect-square">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedDish(null)} className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[80] flex items-center justify-center p-4">
+              <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} onClick={(e) => e.stopPropagation()} className="bg-[#1a1208] border-2 border-[#d4a017]/20 rounded-3xl max-w-md w-full overflow-hidden shadow-3d max-h-[90vh] overflow-y-auto">
+                {/* Image — FIXED: smaller height, not full screen */}
+                <div className="relative h-48 sm:h-56 shrink-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={selectedDish.image} alt={selectedDish.name} className="w-full h-full object-cover" />
-                  <button onClick={() => setSelectedDish(null)} className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/80"><X size={18} /></button>
-                  {selectedDish.isPopular && <span className="absolute top-4 left-4 bg-[#d4a017] text-[#1a1208] text-xs font-bold px-3 py-1 rounded-full">الأكثر طلباً</span>}
+                  <button onClick={() => setSelectedDish(null)} className="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/80"><X size={18} /></button>
+                  <div className="absolute top-3 left-3 flex flex-col gap-1">
+                    {selectedDish.isPopular && <span className="bg-[#d4a017] text-[#1a1208] text-xs font-bold px-3 py-1 rounded-full">الأكثر طلباً</span>}
+                    {selectedDish.isNew && <span className="bg-[#27ae60] text-white text-xs font-bold px-3 py-1 rounded-full">جديد</span>}
+                    {selectedDish.spicy && <span className="bg-[#c0392b] text-white text-xs font-bold px-3 py-1 rounded-full">🌶️ حار</span>}
+                  </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-extrabold text-[#fff8ee] mb-2">{selectedDish.name}</h3>
-                  <p className="text-[#d4a017] text-2xl font-extrabold mb-4">{formatPrice(selectedDish.price)}</p>
-                  <p className="text-[#fff8ee]/70 leading-relaxed mb-6">{selectedDish.description}</p>
-                  <button onClick={() => { addToCart(selectedDish); setSelectedDish(null); }} className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#d4a017] to-[#f0c040] text-[#1a1208] font-bold py-4 rounded-xl hover:scale-[1.02] transition-transform">
-                    <Plus size={18} />أضف إلى السلة
+                {/* Content — FIXED: price and qty always visible */}
+                <div className="p-5">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <h3 className="text-xl font-extrabold text-[#fff8ee]">{selectedDish.name}</h3>
+                      <p className="text-xs text-[#fff8ee]/40">{selectedDish.nameEn}</p>
+                    </div>
+                    <div className="text-end shrink-0">
+                      <p className="text-2xl font-extrabold text-[#d4a017]">{formatPrice(selectedDish.price)}</p>
+                      {selectedDish.oldPrice && <p className="text-xs text-[#fff8ee]/30 line-through">{formatPrice(selectedDish.oldPrice)}</p>}
+                    </div>
+                  </div>
+                  <p className="text-[#fff8ee]/70 text-sm leading-relaxed mb-5">{selectedDish.description}</p>
+                  {/* Quantity selector */}
+                  <div className="flex items-center justify-between mb-5">
+                    <span className="text-sm text-[#fff8ee]/60">الكمية</span>
+                    <div className="flex items-center gap-3">
+                      <button onClick={() => { if (selectedDish) { addToCart(selectedDish); setSelectedDish(null); }}} className="px-4 py-2 rounded-xl bg-[#d4a017]/10 border border-[#d4a017]/30 text-[#d4a017] font-bold hover:bg-[#d4a017]/20 transition-colors text-sm">
+                        + أضف للسلة
+                      </button>
+                    </div>
+                  </div>
+                  <button onClick={() => { addToCart(selectedDish); setSelectedDish(null); }} className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#d4a017] to-[#f0c040] text-[#1a1208] font-bold py-3.5 rounded-xl hover:scale-[1.02] transition-transform shadow-3d">
+                    <Plus size={18} />أضف إلى السلة — {formatPrice(selectedDish.price)}
                   </button>
                 </div>
               </motion.div>
@@ -462,10 +417,11 @@ function DishCard({ dish, onAdd, onClick }: { dish: Dish; onAdd: () => void; onC
     <div className="bg-[#2a1f10] rounded-3xl overflow-hidden border border-[#d4a017]/10 card-lift shine-effect group">
       <div className="relative aspect-[4/3] overflow-hidden cursor-pointer" onClick={onClick}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={dish.image} alt={dish.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+        <img src={dish.image} alt={dish.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
         <div className="absolute top-3 right-3 flex flex-col gap-1">
           {dish.isPopular && <span className="bg-[#d4a017] text-[#1a1208] text-[10px] font-bold px-2 py-1 rounded-full">الأكثر طلباً</span>}
           {dish.isNew && <span className="bg-[#27ae60] text-white text-[10px] font-bold px-2 py-1 rounded-full">جديد</span>}
+          {dish.spicy && <span className="bg-[#c0392b] text-white text-[10px] font-bold px-2 py-1 rounded-full">🌶️</span>}
           {dish.oldPrice && <span className="bg-[#c0392b] text-white text-[10px] font-bold px-2 py-1 rounded-full">خصم</span>}
         </div>
       </div>
@@ -499,9 +455,7 @@ function ReservationForm() {
   if (sent) {
     return (
       <div className="bg-[#2a1f10] rounded-3xl p-8 border border-[#d4a017]/20 text-center">
-        <div className="w-20 h-20 mx-auto bg-[#27ae60] rounded-full flex items-center justify-center mb-4">
-          <Sparkles size={40} className="text-white" />
-        </div>
+        <div className="w-20 h-20 mx-auto bg-[#27ae60] rounded-full flex items-center justify-center mb-4"><Sparkles size={40} className="text-white" /></div>
         <h3 className="text-2xl font-extrabold text-[#fff8ee] mb-2">تم الحجز بنجاح! 🎉</h3>
         <p className="text-[#fff8ee]/60">سنتواصل معك لتأكيد الحجز</p>
       </div>
@@ -537,9 +491,7 @@ function ReservationForm() {
           </select>
         </div>
       </div>
-      <button type="submit" className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#d4a017] to-[#f0c040] text-[#1a1208] font-bold py-4 rounded-xl hover:scale-[1.02] transition-transform shadow-3d">
-        احجز الآن
-      </button>
+      <button type="submit" className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#d4a017] to-[#f0c040] text-[#1a1208] font-bold py-4 rounded-xl hover:scale-[1.02] transition-transform shadow-3d">احجز الآن</button>
     </form>
   );
 }
