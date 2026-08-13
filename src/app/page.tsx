@@ -477,23 +477,19 @@ function DishCard({ dish, onAdd, onClick }: { dish: Dish; onAdd: () => void; onC
 
 function ReservationForm() {
   const [form, setForm] = useState({ name: "", phone: "", date: "", time: "", guests: "2" });
-  const [sent, setSent] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
-    setTimeout(() => { setSent(false); setForm({ name: "", phone: "", date: "", time: "", guests: "2" }); }, 3000);
+    // Build WhatsApp message with reservation details
+    let msg = "السلام عليكم، أرغب بحجز طاولة في صناع الطعم:\n\n";
+    msg += `الاسم: ${form.name}\n`;
+    msg += `الجوال: ${form.phone}\n`;
+    msg += `التاريخ: ${form.date}\n`;
+    msg += `الوقت: ${form.time}\n`;
+    msg += `عدد الضيوف: ${form.guests}\n`;
+    const url = `https://wa.me/966551613755?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
   };
-
-  if (sent) {
-    return (
-      <div className="bg-[#2a1f10] rounded-3xl p-8 border border-[#d4a017]/20 text-center">
-        <div className="w-20 h-20 mx-auto bg-[#27ae60] rounded-full flex items-center justify-center mb-4"><Sparkles size={40} className="text-white" /></div>
-        <h3 className="text-2xl font-extrabold text-[#fff8ee] mb-2">تم الحجز بنجاح! 🎉</h3>
-        <p className="text-[#fff8ee]/60">سنتواصل معك لتأكيد الحجز</p>
-      </div>
-    );
-  }
 
   return (
     <form onSubmit={handleSubmit} className="bg-[#2a1f10] rounded-3xl p-6 sm:p-8 border border-[#d4a017]/20">
