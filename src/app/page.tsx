@@ -62,9 +62,9 @@ export default function Home() {
       <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled ? "bg-[#1a1208]/95 backdrop-blur-md shadow-lg shadow-black/50" : "bg-transparent"}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-4">
           <a href="#home" className="flex items-center gap-2 sm:gap-3 group shrink-0">
-            <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden ring-2 ring-[#d4a017]/50 group-hover:ring-[#d4a017] transition-all" style={{ boxShadow: "0 4px 20px rgba(212,160,23,0.4), 0 8px 30px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,224,130,0.2)" }}>
+            <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden ring-2 ring-[#d4a017]/50 group-hover:ring-[#d4a017] transition-all animate-glow" style={{ boxShadow: "0 4px 20px rgba(212,160,23,0.5), 0 8px 30px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,224,130,0.3), inset 0 -2px 4px rgba(0,0,0,0.3)" }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.svg" alt="صناع الطعم" className="w-full h-full object-cover" />
+              <img src="/logo.svg" alt="صناع الطعم" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
             </div>
             <div className="flex flex-col leading-tight">
               <span className="text-base sm:text-xl font-extrabold text-gold-gradient">صناع الطعم</span>
@@ -190,10 +190,84 @@ export default function Home() {
       {/* Menu */}
       <section id="menu" className="py-20 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
-            <span className="text-sm font-semibold text-[#d4a017] uppercase tracking-widest">قائمتنا</span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#fff8ee] mt-2">أشهى الأطباق</h2>
-            <div className="w-20 h-1 bg-[#d4a017] mx-auto mt-4 rounded-full" />
+          {/* 3D Menu Heading: plate + fork + spoon + steam */}
+          <div className="text-center mb-12 perspective-1000">
+            {/* Steam animation */}
+            <div className="flex justify-center items-end gap-6 h-20 mb-2">
+              {/* Steam line 1 */}
+              <div className="flex flex-col gap-1 items-center">
+                <div className="w-1.5 h-8 bg-[#d4a017]/10 rounded-full animate-pulse" style={{ animationDelay: "0s", animationDuration: "2s" }} />
+                <div className="w-1 h-6 bg-[#d4a017]/15 rounded-full animate-pulse" style={{ animationDelay: "0.3s", animationDuration: "2.5s" }} />
+              </div>
+              {/* Steam line 2 */}
+              <div className="flex flex-col gap-1 items-center">
+                <div className="w-1.5 h-10 bg-[#d4a017]/15 rounded-full animate-pulse" style={{ animationDelay: "0.5s", animationDuration: "3s" }} />
+                <div className="w-1 h-8 bg-[#d4a017]/20 rounded-full animate-pulse" style={{ animationDelay: "0.8s", animationDuration: "2.2s" }} />
+              </div>
+              {/* Steam line 3 */}
+              <div className="flex flex-col gap-1 items-center">
+                <div className="w-1.5 h-8 bg-[#d4a017]/10 rounded-full animate-pulse" style={{ animationDelay: "1s", animationDuration: "2.8s" }} />
+                <div className="w-1 h-6 bg-[#d4a017]/15 rounded-full animate-pulse" style={{ animationDelay: "1.3s", animationDuration: "2.5s" }} />
+              </div>
+            </div>
+
+            {/* Plate with fork + spoon + text */}
+            <div className="flex items-center justify-center gap-2 sm:gap-4">
+              {/* Fork (left) */}
+              <svg width="40" height="80" viewBox="0 0 40 80" className="shrink-0 animate-float" style={{ animationDelay: "0.2s" }}>
+                <defs>
+                  <linearGradient id="forkGold" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#f5d061"/>
+                    <stop offset="50%" stop-color="#d4a017"/>
+                    <stop offset="100%" stop-color="#a07c10"/>
+                  </linearGradient>
+                </defs>
+                <g fill="url(#forkGold)">
+                  <rect x="17" y="25" width="6" height="55" rx="2"/>
+                  <rect x="10" y="0" width="3" height="28" rx="1.5"/>
+                  <rect x="15" y="0" width="3" height="28" rx="1.5"/>
+                  <rect x="20" y="0" width="3" height="28" rx="1.5"/>
+                  <rect x="25" y="0" width="3" height="28" rx="1.5"/>
+                  <rect x="8" y="25" width="24" height="6" rx="3"/>
+                </g>
+              </svg>
+
+              {/* Plate with text */}
+              <div className="relative">
+                {/* Plate glow */}
+                <div className="absolute inset-0 bg-[#d4a017]/20 blur-2xl rounded-full" />
+                {/* Plate */}
+                <div className="relative bg-gradient-to-b from-[#3a2a15] to-[#2a1f10] rounded-full p-4 sm:p-6 border-2 border-[#d4a017]/30 shadow-3d" style={{ boxShadow: "0 8px 30px rgba(212,160,23,0.3), inset 0 2px 8px rgba(0,0,0,0.4)" }}>
+                  <div className="border border-[#d4a017]/20 rounded-full px-6 sm:px-12 py-3 sm:py-4">
+                    <span className="text-xs sm:text-sm font-semibold text-[#d4a017] uppercase tracking-widest block">قائمتنا</span>
+                    <h2 className="text-2xl sm:text-4xl font-extrabold text-[#fff8ee] mt-1">أشهى الأطباق</h2>
+                  </div>
+                </div>
+              </div>
+
+              {/* Spoon (right) */}
+              <svg width="40" height="80" viewBox="0 0 40 80" className="shrink-0 animate-float" style={{ animationDelay: "0.6s" }}>
+                <defs>
+                  <linearGradient id="spoonGold" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#f5d061"/>
+                    <stop offset="50%" stop-color="#d4a017"/>
+                    <stop offset="100%" stop-color="#a07c10"/>
+                  </linearGradient>
+                </defs>
+                <g fill="url(#spoonGold)">
+                  <rect x="17" y="30" width="6" height="50" rx="2"/>
+                  <ellipse cx="20" cy="15" rx="10" ry="15" fill="url(#spoonGold)"/>
+                  <ellipse cx="20" cy="15" rx="7" ry="11" fill="#2a1f10" opacity="0.5"/>
+                </g>
+              </svg>
+            </div>
+
+            {/* Decorative line under plate */}
+            <div className="flex items-center justify-center gap-2 mt-4">
+              <div className="w-8 h-0.5 bg-[#d4a017]/30 rounded-full" />
+              <span className="text-[#d4a017] text-xs">★</span>
+              <div className="w-8 h-0.5 bg-[#d4a017]/30 rounded-full" />
+            </div>
           </div>
 
           {/* Category filters — FIXED: flex-wrap instead of overflow */}
@@ -296,7 +370,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-2xl overflow-hidden ring-2 ring-[#d4a017]/50" style={{ boxShadow: "0 4px 20px rgba(212,160,23,0.4), 0 8px 30px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,224,130,0.2)" }}>
+                <div className="w-12 h-12 rounded-2xl overflow-hidden ring-2 ring-[#d4a017]/50 animate-glow" style={{ boxShadow: "0 4px 20px rgba(212,160,23,0.5), 0 8px 30px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,224,130,0.3), inset 0 -2px 4px rgba(0,0,0,0.3)" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/logo.svg" alt="صناع الطعم" className="w-full h-full object-cover" />
                 </div>
