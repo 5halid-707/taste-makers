@@ -36,7 +36,11 @@ const IMG = {
   salad: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&q=80&auto=format&fit=crop",
   salad2: "https://images.unsplash.com/photo-1543353071-873f17a7a088?w=600&q=80&auto=format&fit=crop",
   stew: "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&q=80&auto=format&fit=crop",
-  buffet: "https://images.unsplash.com/photo-1565299594821-2547b1a5e2e2?w=600&q=80&auto=format&fit=crop",
+  // Local images that always work for buffets
+  buffet1: "/dishes/mandi.jpg",
+  buffet2: "/dishes/kibbeh-fried.jpg",
+  buffet3: "/dishes/thareed.jpg",
+  buffet4: "/dishes/cheesecake.jpg",
 };
 
 export const DISHES: Dish[] = [
@@ -109,10 +113,10 @@ export const DISHES: Dish[] = [
   { id: "baklava", name: "بقلاوة مشكلة", nameEn: "Mixed Baklava", category: "dessert", price: 25, image: IMG.dessert, description: "بقلاوة مشكلة بالفستق والجوز والعسل.", isNew: true },
 
   // ===== بوفيهات المناسبات =====
-  { id: "buffet-wedding", name: "بوفيه أعراس", nameEn: "Wedding Buffet", category: "buffet", price: 120, image: IMG.buffet, description: "بوفيه متكامل للأعراس يشمل: مندي + كبة + سمبوسة + سلطات + حلويات. السعر للفرد.", isNew: true },
-  { id: "buffet-corporate", name: "بوفيه مؤتمرات", nameEn: "Corporate Buffet", category: "buffet", price: 90, image: IMG.buffet, description: "بوفيه للمؤتمرات والاجتماعات. السعر للفرد.", isNew: true },
-  { id: "buffet-family", name: "بوفيه عائلي", nameEn: "Family Buffet", category: "buffet", price: 75, image: IMG.buffet, description: "بوفيه عائلي للمناسبات الخاصة. السعر للفرد.", isNew: true },
-  { id: "buffet-ramadan", name: "بوفيه رمضان", nameEn: "Ramadan Buffet", category: "buffet", price: 85, image: IMG.buffet, description: "بوفيه رمضاني متكامل: شربة + سمبوسة + أطباق رئيسية + حلويات. السعر للفرد.", isNew: true },
+  { id: "buffet-wedding", name: "بوفيه أعراس", nameEn: "Wedding Buffet", category: "buffet", price: 120, image: IMG.buffet1, description: "بوفيه متكامل للأعراس يشمل: مندي + كبة + سمبوسة + سلطات + حلويات. السعر للفرد.", isNew: true },
+  { id: "buffet-corporate", name: "بوفيه مؤتمرات", nameEn: "Corporate Buffet", category: "buffet", price: 90, image: IMG.buffet2, description: "بوفيه للمؤتمرات والاجتماعات. السعر للفرد.", isNew: true },
+  { id: "buffet-family", name: "بوفيه عائلي", nameEn: "Family Buffet", category: "buffet", price: 75, image: IMG.buffet3, description: "بوفيه عائلي للمناسبات الخاصة. السعر للفرد.", isNew: true },
+  { id: "buffet-ramadan", name: "بوفيه رمضان", nameEn: "Ramadan Buffet", category: "buffet", price: 85, image: IMG.buffet4, description: "بوفيه رمضاني متكامل: شربة + سمبوسة + أطباق رئيسية + حلويات. السعر للفرد.", isNew: true },
 ];
 
 export function formatPrice(price: number): string {

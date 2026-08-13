@@ -46,15 +46,25 @@ export default function Home() {
   const cartTotal = cart.reduce((sum, c) => sum + c.dish.price * c.qty, 0);
   const cartCount = cart.reduce((sum, c) => sum + c.qty, 0);
 
+  // Build WhatsApp order URL with full cart details
+  const getWhatsAppOrderUrl = () => {
+    let msg = "السلام عليكم، أرغب بطلب الأطباق التالية من صناع الطعم:\n\n";
+    cart.forEach((item, i) => {
+      msg += `${i + 1}. ${item.dish.name} × ${item.qty} = ${item.dish.price * item.qty} ر.س\n`;
+    });
+    msg += `\nالإجمالي: ${cartTotal} ر.س\n\nاسم: _______\nالعنوان: _______`;
+    return `https://wa.me/966551613755?text=${encodeURIComponent(msg)}`;
+  };
+
   return (
     <div className="min-h-screen bg-[#1a1208]">
       {/* Navbar */}
       <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled ? "bg-[#1a1208]/95 backdrop-blur-md shadow-lg shadow-black/50" : "bg-transparent"}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-4">
           <a href="#home" className="flex items-center gap-2 sm:gap-3 group shrink-0">
-            <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden ring-2 ring-[#d4a017]/40 group-hover:ring-[#d4a017] transition-all shadow-lg" style={{ boxShadow: "0 4px 20px rgba(212,160,23,0.3)" }}>
+            <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden ring-2 ring-[#d4a017]/50 group-hover:ring-[#d4a017] transition-all" style={{ boxShadow: "0 4px 20px rgba(212,160,23,0.4), 0 8px 30px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,224,130,0.2)" }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.jpg" alt="صناع الطعم" className="w-full h-full object-cover" />
+              <img src="/logo.svg" alt="صناع الطعم" className="w-full h-full object-cover" />
             </div>
             <div className="flex flex-col leading-tight">
               <span className="text-base sm:text-xl font-extrabold text-gold-gradient">صناع الطعم</span>
@@ -263,9 +273,9 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-2xl overflow-hidden ring-2 ring-[#d4a017]/40 shadow-lg" style={{ boxShadow: "0 4px 20px rgba(212,160,23,0.3)" }}>
+                <div className="w-12 h-12 rounded-2xl overflow-hidden ring-2 ring-[#d4a017]/50" style={{ boxShadow: "0 4px 20px rgba(212,160,23,0.4), 0 8px 30px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,224,130,0.2)" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/logo.jpg" alt="صناع الطعم" className="w-full h-full object-cover" />
+                  <img src="/logo.svg" alt="صناع الطعم" className="w-full h-full object-cover" />
                 </div>
                 <div><p className="text-lg font-extrabold text-gold-gradient">صناع الطعم</p><p className="text-[10px] text-[#d4a017]/60 tracking-widest">TASTE MAKERS</p></div>
               </div>
@@ -349,7 +359,7 @@ export default function Home() {
                         <span className="text-2xl font-extrabold text-gold-gradient">{formatPrice(cartTotal)}</span>
                       </div>
                     </div>
-                    <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white font-bold py-4 rounded-xl hover:scale-[1.02] transition-transform">
+                    <a href={getWhatsAppOrderUrl()} target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white font-bold py-4 rounded-xl hover:scale-[1.02] transition-transform">
                       <Send size={18} />اطلب عبر واتساب
                     </a>
                   </>
