@@ -267,6 +267,29 @@ export default function Home() {
         </div>
       </section>
 
+      {/* QR Code Section */}
+      <section className="py-16 bg-gradient-to-b from-[#1a1208] to-[#2a1f10] border-t border-[#d4a017]/10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <span className="text-sm font-semibold text-[#d4a017] uppercase tracking-widest">امسح واطلب</span>
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#fff8ee] mt-2 mb-3">اطلب الآن بالباركود</h2>
+          <p className="text-[#fff8ee]/50 text-sm mb-8">وجّه كاميرا جوالك إلى الباركود للوصول السريع للقائمة والطلب</p>
+          <div className="inline-block relative">
+            {/* Glow behind QR */}
+            <div className="absolute inset-0 bg-[#d4a017]/20 blur-3xl rounded-full" />
+            <div className="relative bg-[#fff8ee] p-6 rounded-3xl shadow-3d" style={{ boxShadow: "0 10px 40px rgba(212,160,23,0.3)" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/qr-code.png" alt="باركود صناع الطعم" className="w-48 h-48 sm:w-56 sm:h-56 mx-auto" />
+              {/* Logo overlay on QR */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-2xl overflow-hidden ring-4 ring-[#fff8ee] shadow-lg">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/logo.svg" alt="صناع الطعم" className="w-full h-full object-cover bg-[#1a1208]" />
+              </div>
+            </div>
+          </div>
+          <p className="text-[#d4a017] text-sm font-bold mt-6">taste-makers-cyan.vercel.app</p>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer id="contact" className="bg-[#2a1f10] pt-16 pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
