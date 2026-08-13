@@ -61,7 +61,7 @@ export default function Home() {
             <div className="relative">
               <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden ring-2 ring-[#d4a017]/40 group-hover:ring-[#d4a017] transition-all animate-glow">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.png" alt="صناع الطعم" className="w-full h-full object-cover" />
+                <img src="/logo.jpg" alt="صناع الطعم" className="w-full h-full object-cover" />
               </div>
             </div>
             <div className="flex flex-col leading-tight">
@@ -314,7 +314,7 @@ export default function Home() {
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 rounded-2xl overflow-hidden ring-2 ring-[#d4a017]/40">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/logo.png" alt="صناع الطعم" className="w-full h-full object-cover" />
+                  <img src="/logo.jpg" alt="صناع الطعم" className="w-full h-full object-cover" />
                 </div>
                 <div>
                   <p className="text-lg font-extrabold text-gold-gradient">صناع الطعم</p>
